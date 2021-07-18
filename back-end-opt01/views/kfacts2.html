@@ -1,0 +1,10 @@
+<h2>A Directory of Koala Attributes</h2>
+<!-- <%= naw = new Date(); %> -->
+<p>The current time is <%= naw.toISOString() %></p>
+<ul class="list-group">
+  <% attributes.forEach( function(attribute) { %>
+    <li class="list-group-item">
+      <%= attribute.meta_name %> : <%= attribute.meta_value %>
+    </li>
+  <% }) %>
+</ul>

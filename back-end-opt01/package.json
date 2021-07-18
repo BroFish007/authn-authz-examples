@@ -1,0 +1,27 @@
+{
+  "name": "backend-end-opt01",
+  "version": "1.0.0",
+  "description": "Authentication and Authorization Back End Option #1",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo 'hi'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "BroFish007"
+  },
+  "keywords": [
+    "authorization",
+    "authentication",
+    "OIDC",
+    "nodejs"
+  ],
+  "author": "BroFish",
+  "license": "MIT",
+  "dependencies": {
+    "@koa/router": "^10.0.0",
+    "koa": "^2.13.1",
+    "koa-ejs": "^4.3.0",
+    "nodemon": "^2.0.12"
+  }
+}

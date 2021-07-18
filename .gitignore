@@ -1,0 +1,14 @@
+## https://git-scm.com/docs/gitignore
+*~
+'#*
+backups
+**/backups
+.vscode
+_notes.org
+**/node_modules
+## specific to this project
+**/.env
+## do NOT include the above; it~s a security issue
+**/*.nope
+**/*.why
+## EOF
