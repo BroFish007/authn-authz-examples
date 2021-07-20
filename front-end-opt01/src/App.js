@@ -115,7 +115,7 @@ function Open () {
 function  CallApi() {
     console.log("in CallApi");
 
-    const apiUrl = "https://localhost:3001/api"
+    const apiUrl = process.env.REACT_APP_API_URL
 
     let state = {
 	error: null,
@@ -156,8 +156,7 @@ function  CallApi() {
 
 function CallApi3() {
     console.log("in CallApi3");
-    //const apiUrl = "https://localhost:3001/api"
-    const apiUrl = "https://api.localtest.me:3001/api";
+    const apiUrl = process.env.REACT_APP_API_URL
     const options = {
 	// method choices: GET(*), POST, PUT, DELETE, etc.
 	method: 'GET',
@@ -202,8 +201,8 @@ function CallApi3() {
 const CallApi4 = async() => {
     // inspired by: https://auth0.com/blog/complete-guide-to-react-user-authentication/#Calling-an-API
     // (part of the example for src/views/external-api.js)
-    const apiUrl = "https://api.localtest.me:3001/api";
     const { getAccessTokenSilently } = useAuth0();
+    const apiUrl = process.env.REACT_APP_API_URL
     try {
 	const token = await getAccessTokenSilently();
 	const response = await fetch(
