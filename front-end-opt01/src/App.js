@@ -16,7 +16,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import LoginButton  from "./components/login-button";
 import LogoutButton from "./components/logout-button";
-import AuthenticationButton from "./components/authentication-button";
 import AuthNav from "./components/auth-nav";
 
 // import { Profile } from "./views";			// nope: Module not found: Can't resolve './views' in '...\src'
@@ -58,6 +57,11 @@ function App() {
     </Router>
   );
 };
+
+function dait() {
+    let dait = new Date();
+    return dait.toISOString();
+}
 
 function Home() {
     console.log("in home");
@@ -224,7 +228,6 @@ const CallApi4 = async() => {
 
 function Protected() {
     console.log('in Protected');
-    let dait = new Date();
     let state = CallApi4();
     console.log('state=|' + state + '|');
     console.log('state=' + JSON.stringify(state, null, 2));
@@ -261,7 +264,7 @@ function Protected() {
 	return (
 		<div>
 		<h2>Protected</h2>
-		<p>{ dait.toISOString() }</p>
+		<p>{ dait() }</p>
 		<p>Loading...</p>
 		</div>
 	);
@@ -271,7 +274,7 @@ function Protected() {
     return (
 	<div>
 	    <h2>Protected</h2>
-	    <p>{ dait.toISOString() }</p>
+	    <p>{ dait() }</p>
 	    {/* state */}
 	<h3>User</h3>
 	    <pre>
