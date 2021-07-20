@@ -10,5 +10,6 @@ _notes.org
 **/.env
 ## do NOT include the above; it~s a security issue
 **/*.nope
+**/*.pem
 **/*.why
 ## EOF
