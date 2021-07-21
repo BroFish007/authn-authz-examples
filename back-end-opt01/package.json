@@ -20,8 +20,12 @@
   "license": "MIT",
   "dependencies": {
     "@koa/router": "^10.0.0",
+    "dotenv": "^10.0.0",
+    "jwks-rsa": "^2.0.4",
     "koa": "^2.13.1",
     "koa-ejs": "^4.3.0",
+    "koa-jwt": "^4.0.1",
+    "millisecond": "^0.1.2",
     "nodemon": "^2.0.12"
   }
 }
