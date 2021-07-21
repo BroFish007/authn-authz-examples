@@ -169,7 +169,7 @@ function CallApi3() {
 	headers: {
 	    'User-Agent': 'Amiga Toaster3',
 	    'X-myCustomHeader': 1914,
-	    'Authorization' : 'Bearer: 776688'
+	    'Authorization' : 'Bearer 776688'
 	}
 	// redirect choices: manual, follow(*), error
 	// referrerPolicy choices: no-referrer, no-referrer-when-downgrade(*), origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -213,7 +213,8 @@ const CallApi4 = async() => {
 		credentials: 'include',
 		headers: {
 		    'User-Agent': 'Amiga Toaster4',
-		    Authorization : `Bearer: ${token}`,
+		    //Authorization : `Bearer ${token}.replace('c','b')`,
+		    Authorization : `Bearer ${token}`,
 		}
 	    }
 	);
