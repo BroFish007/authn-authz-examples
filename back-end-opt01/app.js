@@ -109,33 +109,35 @@ var jwtCheck = jwt({
     secret: koaJwtSecret({
 	jwksUri: process.env.AUTH0_IDP + '/.well-known/jwks.json',
 	cache: true,
-	// rateLimit: true,
-	// jwksRequestsPerMinute: 5,
 	cacheMaxEntries: 5,
 	cacheMaxAge: ms('1h') 
     }),
     audience: process.env.AUTH0_AUDIENCE,
     issuer: process.env.AUTH0_IDP + '/'
 }).unless({ method: 'OPTIONS' });
-console.log('jwtCheck=' + jwtCheck);
+//console.log('jwtCheck=' + jwtCheck);
+// must include ".unless({method:'OPTIONS'})" above, else CORS preflight fails and get '401 Unauthorized' response
+// https://github.com/Foxandxss/koa-unless
+
 
 // Custom 401 handling (first middleware)
 // from: https://www.npmjs.com/package/koa-jwt
 app.use(function (ctx, next) {
-  return next().catch((err) => {
-      console.log('Oh no...found an error');
-      console.log('err=' + err);
-      if (err.status === 401) {
-      ctx.status = 401;
-      ctx.body = {
-        error: err.originalError ? err.originalError.message : err.message
-      };
-	  let errmsg2 = err.originalError ? err.originalError.message : err.message;
-	  console.log('Error: ' + errmsg2);
-    } else {
-      throw err;
-    }
-  });
+    return next().catch((err) => {
+	console.log('Oh no...found an error');
+	console.log('err=' + err);
+	if (err.status === 401) {
+	    ctx.status = 401;
+	    ctx.body = {
+		error2: err.originalError ? err.originalError.message : err.message
+	    };
+	    // Bad Bearer token returns >> { "error2": "Invalid token" }
+	    let errmsg2 = err.originalError ? err.originalError.message : err.message;
+	    console.log('Error: ' + errmsg2);
+	} else {
+	    throw err;
+	}
+    });
 });
 
 app.use(debugRoutes.routes());
@@ -143,24 +145,10 @@ app.use(defaultRoutes.routes());
 app.use(errerRoutes.routes());
 app.use(loginRoutes.routes());
 app.use(kfactsRoutes.routes());
+
 // Middleware below this line is only reached if the JWT token is valid
-//app.use(jwtCheck);
-app.use(
-    jwt({
-	secret: koaJwtSecret({
-	    jwksUri: process.env.AUTH0_IDP + '/.well-known/jwks.json',
-	    cache: true,
-	    // rateLimit: true,
-	    // jwksRequestsPerMinute: 5,
-	    cacheMaxEntries: 5,
-	    cacheMaxAge: ms('1h') 
-	}),
-	audience: process.env.AUTH0_AUDIENCE,
-	issuer: process.env.AUTH0_IDP + '/'
-    }).unless({ method: 'OPTIONS' })
-);
-// must include ".unless({method:'OPTIONS'})" above, else CORS preflight fails and get '401 Unauthorized' response
-// https://github.com/Foxandxss/koa-unless
+app.use(jwtCheck);
+
 app.use(apiRoutes.routes());
 
 // app.use(router.routes()).use(router.allowedMethods());
