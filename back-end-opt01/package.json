@@ -26,6 +26,7 @@
     "koa-ejs": "^4.3.0",
     "koa-jwt": "^4.0.1",
     "millisecond": "^0.1.2",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.12"
   }
 }
