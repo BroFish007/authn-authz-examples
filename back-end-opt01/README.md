@@ -1,11 +1,14 @@
-# Front End Option #1
+# Back End Option #1
 
 ## Synopsis
 - Node.js using the Koa framework
-- Federated login using Okta developer account
-- Roles are passed to the back-end in the HTTP header
+- Assumes the UI did a federated login using Auth0 developer account
 
 ## Installation
+`npm install`
+
+## Launching The Proof-of-Concept
+`nodemon app.js`
 
 ## Project Creation
 The following are the steps to create the project.
