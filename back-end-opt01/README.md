@@ -5,19 +5,13 @@
 - Assumes the UI did a federated login using Auth0 developer account
 
 ## Installation
-`npm install`
+(1) `npm install`
+
+(2) Go into `../certs` and run `sh make_certs.sh` (no input should be needed).
+Then copy `api_server_*.pem` into this folder.
+
+(3) Create the `.env` file, using `.env_example` as a guide.
+(But if you're on the same project, ask BroFish for the `.env` file.)
 
 ## Launching The Proof-of-Concept
 `nodemon app.js`
-
-## Project Creation
-The following are the steps to create the project.
-Note that you will not have to do the following steps; just do `npm install`
-```
-> npm init
-> npm install --save koa
-> npm install --save koa-router
-> npm install -g nodemon
-> npm install @koa/router
-> npm install koa-ejs
-```
