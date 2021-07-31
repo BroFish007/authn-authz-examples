@@ -19,84 +19,39 @@ function timestamp() {
     return now.toISOString();
 }
 
+// using async/await syntax (which is really just Promises with a different name)
+// many thanks to David P for helping fix this
 async function getUserInfo(token) {
-    let auth0url = process.env.AUTH0_IDP + '/v2/userinfo';
-    const options = {
-	method: 'GET',
-	headers: {
-	    Authorization: `Bearer ${token}`
-	}}
-    console.log('good to here 1');
-    (async () => {
-	try {
-	    console.log('good to here 2');
-	    console.log('options = ', options);
-	    const resp = await fetch(auth0url, options);
-	    console.log('good to here 3');
-	    // console.log('resp = ', resp);
-	    let userinfo = await resp.json();
-	    console.log('userinfo =', userinfo);
-	    return userinfo;
-	} catch(e) {
-	    console.error('Something went wrong:', e);
-	}
-    })();
-};
+  const response = await fetch(
+    `${process.env.AUTH0_IDP}/v2/userinfo`,
+    {
+      method: 'GET',
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    }
+  )
+  return await response.json()
+}
 
-// ignore getUserInfo02: it is not used
-async function getUserInfo02(token) {
-    let auth0url = process.env.AUTH0_IDP + '/v2/userinfo';
-    const options = {
-	method: 'GET',
-	headers: {
-	    Authorization: `Bearer ${token}`
-	}}
-    console.log('good to here 21');
-    (async () => {
-	try {
-	    console.log('good to here 22');
-	    console.log('options = ', options);
-	    return await fetch(auth0url, options)
-		.then(res => {
-		    console.log('good to here 23');
-		    console.log('res23 = ', res);
-		    return res.json();
-		})
-	} catch(e) {
-	    console.error('Something went wrong:', e);
-	}
-    })();
-};
-
-router.get('/api', (ctx) => {
+router.get('/api', async (ctx) => {
     console.log('in api.js: GET');
     let token = getAccessToken(ctx);
-    let resp42 = null;
 
-/*
-    (async() => {
-	resp42 = await getUserInfo(token);
-	console.log('resp42a = ', resp42);
-    })();
-    console.log('resp42b = ', resp42);
-*/
-
-    if (!resp42) {
-	resp42 = getUserInfo(token);
-    }
+    let resp42 = await getUserInfo(token);
     console.log('resp42c = ', resp42);
 
-    // ctx.body = { a: 1, b: "two", c: [ "side", "sick" ] };
     ctx.body = {
 	meta: {
 	    req: "GET /api",
 	    status: 200,
-	    token: `${token}`
+	    // token: `${token}`
 	},
 	data: [
 	    { some_key: "some value" },
 	    { another_key: "another value" },
-	    { stuff: `${resp42}` }
+	    { user_name: `${resp42.name}` },
+	    { user_email: `${resp42.email}` }
 	]
     };
     // from https://akhromieiev.com/tutorials/how-to-send-json-response-using-koa/
