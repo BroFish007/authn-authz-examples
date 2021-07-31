@@ -45,7 +45,9 @@ app.use(async (ctx, next) => {
     console.log('---\\/--- ctx.request ---\\/--- ' + timestamp() );
     console.log(ctx.request);
     console.log('---/\\--- ctx.request ---/\\---');
+    // the above lines are written out before subsequent middleware and app layers execute
     await next();
+    // the following lines are written out after subsequent middleware and app layers execute
     console.log('---\\/--- ctx.response ---\\/---');
     if (ctx) {
 	console.log(ctx.response);
@@ -102,7 +104,6 @@ const apiRoutes = require('./routes/api');
 const debugRoutes = require('./routes/debug');
 const defaultRoutes = require('./routes/default');
 const errerRoutes = require('./routes/errer')
-const loginRoutes = require('./routes/login')
 const kfactsRoutes = require('./routes/kfacts');
 
 var jwtCheck = jwt({
@@ -143,7 +144,6 @@ app.use(function (ctx, next) {
 app.use(debugRoutes.routes());
 app.use(defaultRoutes.routes());
 app.use(errerRoutes.routes());
-app.use(loginRoutes.routes());
 app.use(kfactsRoutes.routes());
 
 // Middleware below this line is only reached if the JWT token is valid
